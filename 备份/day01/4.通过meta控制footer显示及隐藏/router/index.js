@@ -27,16 +27,8 @@ export default new VueRouter({
       }
     },
     {
-      path:'/search/:keyword?',
-      component:Search,
-      name:'search',
-      // props(route){
-      //   return {
-      //     keyword:route.params.keyword,
-      //     keyword1:route.query.keyword1
-      //   }
-      // }
-      props:(route)=>({...route.params,...route.query})
+      path:'/search',
+      component:Search
     },
     {
       path:'/',
