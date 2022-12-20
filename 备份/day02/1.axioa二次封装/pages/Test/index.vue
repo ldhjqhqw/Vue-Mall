@@ -8,7 +8,6 @@
 <script>
 import axios from 'axios'
 import ajax from '@/api/ajax.js'
-import {reqCategoryList} from '@/api'
 export default {
   name: 'Test',
   methods: {
@@ -25,14 +24,10 @@ export default {
       // }
 
       // 这是咱们自己的ajax发送请求
-      // const res = await ajax({
-      //   url: '/product/getBaseCategoryList',
-      //   method: 'get',
-      // })
-
-      // 这是使用接口函数的
-      const res = await reqCategoryList()
-      console.log(res,'res')
+      const res = await ajax({
+        url: '/product/getBaseCategoryList',
+        method: 'get',
+      })
     },
   },
 }
