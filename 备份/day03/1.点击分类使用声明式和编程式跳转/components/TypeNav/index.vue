@@ -1,10 +1,10 @@
 <template>
   <div class="type-nav">
     <div class="container">
-      <div class="nav-left" @mouseleave="moveOut">
-        <h2 class="all" @mouseenter="isShow = true" >全部商品分类</h2>
-        <div class="sort" v-if="isShow">
-          <div class="all-sort-list2" @click="goSearch">
+      <div class="nav-left">
+        <h2 class="all">全部商品分类</h2>
+        <div class="sort">
+          <div class="all-sort-list2">
             <!-- 参考值思想 -->
             <div
               class="item"
@@ -15,11 +15,11 @@
               :key="c1.categoryId"
             >
               <h3>
-                <a :data-categoryName="c1.categoryName" :data-category1Id="c1.categoryId">{{ c1.categoryName }}</a>
+                <!-- <a href="">{{ c1.categoryName }}</a> -->
                 <!-- 1.使用声明式导航 不好 组件的本质是一个实例化对象 需要存储在堆内存 性能不好 太多了 -->
                 <!-- <router-link :to="{name:'search',query:{categoryName:c1.categoryName,category1Id:c1.categoryId},}">{{ c1.categoryName }}</router-link> -->
                 <!-- 2.使用编程式导航 效果上不卡 但是每一个都会生成一个回调函数 也需要储存在堆内存 太多了 性能不好-->
-                <!-- <a @click="$router.push({name:'search',query:{categoryName:c1.categoryName,category1Id:c1.categoryId},})">{{ c1.categoryName }}</a> -->
+                <a @click="$router.push({name:'search',query:{categoryName:c1.categoryName,category1Id:c1.categoryId},})">{{ c1.categoryName }}</a>
               </h3>
               <div class="item-list clearfix">
                 <div
@@ -29,15 +29,15 @@
                 >
                   <dl class="fore">
                     <dt>
-                      <a :data-categoryName="c2.categoryName" :data-category2Id="c2.categoryId">{{ c2.categoryName }}</a>
+                      <!-- <a href="">{{ c2.categoryName }}</a> -->
                       <!-- <router-link :to="{name:'search',query:{categoryName:c2.categoryName,category2Id:c2.categoryId},}">{{ c2.categoryName }}</router-link> -->
-                      <!-- <a @click="$router.push({name:'search',query:{categoryName:c2.categoryName,category2Id:c2.categoryId},})">{{ c2.categoryName }}</a> -->
+                      <a @click="$router.push({name:'search',query:{categoryName:c2.categoryName,category2Id:c2.categoryId},})">{{ c2.categoryName }}</a>
                     </dt>
                     <dd>
                       <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-                        <a :data-categoryName="c3.categoryName" :data-category3Id="c3.categoryId">{{ c3.categoryName }}</a>
+                        <!-- <a href="">{{ c3.categoryName }}</a> -->
                         <!-- <router-link :to="{name:'search',query:{categoryName:c3.categoryName,category3Id:c3.categoryId},}">{{ c3.categoryName }}</router-link> -->
-                        <!-- <a @click="$router.push({name:'search',query:{categoryName:c3.categoryName,category3Id:c3.categoryId},})">{{ c3.categoryName }}</a> -->
+                        <a @click="$router.push({name:'search',query:{categoryName:c3.categoryName,category3Id:c3.categoryId},})">{{ c3.categoryName }}</a>
                       </em>
                     </dd>
                   </dl>
@@ -62,20 +62,25 @@
 </template>
 
 <script>
+// 全部引入
+// import _ from 'lodash'
+// 按需引入
 import throttle from 'lodash/throttle'
 import { mapState } from 'vuex'
+// 组件开发的小步骤
+// 1.静态搭建(拆组件)
+//    1.1 接口函数  1.2 书写三连环  1.3 组件当中义映射数据
+// 2.动态渲染
+// 3.页面交互
 export default {
   name: 'TypeNav',
   data() {
     return {
       currentIndex: -1,
-      isShow:true, //一打开页面 Home展示下面分类内容 初始值给true
     }
   },
   mounted() {
-    if(this.$route.path!=='/home'){
-      this.isShow = false
-    }
+    // this.$store.dispatch('getCategoryList')
     this.getCategoryList()
   },
   methods: {
@@ -83,42 +88,30 @@ export default {
       this.$store.dispatch('getCategoryList')
     },
     handle(index){
-      // console.log(index)
+      console.log(index)
       this.currentIndex = index
     },
-    // 节流完成移入一级高亮
+    // lodash 之前有些包依赖于他 所以不需要再下载了 直接用就成
+    // 引入lodash多一个_变量
+    // throttle 把多次的一个频繁触发转变成少次的
+    // 参数1 真正的事件处理函数 参数2 间隔时间
+    // 返回值: 节流之后的新函数
+
+    // 事件回调函数写成普通函数 可行
     moveIn:throttle(function(index){
-      // console.log(index)
+      console.log(index)
       this.currentIndex = index
       // trailing 默认值是true  不管操作是否还有 两秒这次一定帮你执行
       // trailing false  如果在2s之前结果了操作 2s那次不帮你执行了
-    }, 60,{trailing:false}),
-    // 事件委派完成点击分类跳转
-    goSearch(e){
-      // 判断他点的是不是a标签  点的几级的a标签  怎么获取那些药传递的数据
-      // dataset可以获取某个dom节点身上data-开头的自定义属性（属性名偷偷的帮你全部变成了小写）
-      let dataset = e.target.dataset
-      let {categoryname,category1id,category2id,category3id} = dataset
-      if(categoryname){ //点的一定是a标签 因为只给a标签加过这个自定义属性
-        let location ={
-          name:'search'
-        }
-        // 无论传递的是params参数还是query  值如果是undefined  不会显示在路径中
-        location.query = {
-          categoryName:categoryname,
-          category1Id:category1id,
-          category2Id:category2id,
-          category3Id:category3id
-        }
-        // 本质是跳转过去search 并且传参
-        this.$router.push(location)
-      }
-    },
-    moveOut(){
-      if(this.$route.path!=='/home'){
-        this.isShow = false
-      }
-    }
+    }, 60,{trailing:false})
+
+    // 写成methods方法 不行 this指向window  但是vue内部又开启了严格模式 指向undefined
+    // moveIn:_.throttle(this.handle, 2000)
+
+    // 写成箭头函数 不行 this指向window  但是vue内部又开启了严格模式 指向undefined
+    // moveIn:_.throttle((index)=>{
+    //   this.currentIndex = index
+    // }, 2000)
   },
   computed: {
     ...mapState({

@@ -1,9 +1,9 @@
 <template>
   <div class="type-nav">
     <div class="container">
-      <div class="nav-left" @mouseleave="moveOut">
-        <h2 class="all" @mouseenter="isShow = true" >全部商品分类</h2>
-        <div class="sort" v-if="isShow">
+      <div class="nav-left">
+        <h2 class="all">全部商品分类</h2>
+        <div class="sort">
           <div class="all-sort-list2" @click="goSearch">
             <!-- 参考值思想 -->
             <div
@@ -69,13 +69,9 @@ export default {
   data() {
     return {
       currentIndex: -1,
-      isShow:true, //一打开页面 Home展示下面分类内容 初始值给true
     }
   },
   mounted() {
-    if(this.$route.path!=='/home'){
-      this.isShow = false
-    }
     this.getCategoryList()
   },
   methods: {
@@ -112,11 +108,6 @@ export default {
         }
         // 本质是跳转过去search 并且传参
         this.$router.push(location)
-      }
-    },
-    moveOut(){
-      if(this.$route.path!=='/home'){
-        this.isShow = false
       }
     }
   },

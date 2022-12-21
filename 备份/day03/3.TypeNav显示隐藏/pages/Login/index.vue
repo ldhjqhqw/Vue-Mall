@@ -1,13 +1,12 @@
 <template>
   <div>
-    <TypeNav></TypeNav>
+    <h1>Login</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Search',
-  props:['keyword','keyword1']
+  name: 'Login',
 }
 </script>
 
