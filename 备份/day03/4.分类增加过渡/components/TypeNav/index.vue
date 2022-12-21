@@ -91,8 +91,12 @@ export default {
     if (this.$route.path !== '/home') {
       this.isShow = false
     }
+    this.getCategoryList()
   },
   methods: {
+    getCategoryList() {
+      this.$store.dispatch('getCategoryList')
+    },
     handle(index) {
       // console.log(index)
       this.currentIndex = index

@@ -1,12 +1,11 @@
 <template>
   <div>
     <Header></Header>
-    <!-- 第一次是不会缓存的 第二次才会缓存 发送请求是2次 -->
-    <!-- <keep-alive :include="['Home','Search']">
-      <router-view></router-view>
-    </keep-alive> -->
-
+    <!-- 中间之后有可能展示首页 搜索 详情 购物车... -->
     <router-view></router-view>
+    <!-- <Footer v-if="$route.path !== '/login' && $route.path !== '/register'"></Footer> -->
+    <!-- <Footer v-if="test"></Footer> -->
+    <!-- 通过路由元数据控制footer显示和隐藏 -->
     <Footer v-if="!$route.meta.isHidden"></Footer>
   </div>
 </template>
@@ -20,14 +19,8 @@ export default {
     Header,
     Footer
   },
-  // 为了解决分类请求多次发送 把发送请求放在App组件中 Home组件和Search切换并不会让App重新挂载
   mounted(){
-    this.getCategoryList()
-  },
-  methods:{
-    getCategoryList() {
-      this.$store.dispatch('getCategoryList')
-    },
+    // console.log(this.$route)
   },
   computed:{
     test(){
