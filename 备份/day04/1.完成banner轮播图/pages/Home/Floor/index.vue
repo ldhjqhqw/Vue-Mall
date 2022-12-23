@@ -21,19 +21,15 @@
             <div class="blockgary">
               <ul class="jd-list">
                 <li v-for="(keyword, index) in floor.keywords" :key="index">
-                  {{ keyword }}
+                  {{keyword}}
                 </li>
               </ul>
               <img :src="floor.imgUrl" />
             </div>
             <div class="floorBanner">
-              <div class="swiper-container" ref="floor1Swiper">
+              <div class="swiper-container" id="floor1Swiper">
                 <div class="swiper-wrapper">
-                  <div
-                    class="swiper-slide"
-                    v-for="img in floor.carouselList"
-                    :key="img.id"
-                  >
+                  <div class="swiper-slide" v-for="img in floor.carouselList" :key="img.id">
                     <img :src="img.imgUrl" />
                   </div>
                 </div>
@@ -74,32 +70,9 @@
 </template>
 
 <script>
-import Swiper from 'swiper'
-import 'swiper/css/swiper.min.css'
 export default {
   name: 'Floor',
   props: ['floor'],
-  mounted() {
-    //能保证我页面是挂载的
-    // 因为一上来就有数据 不涉及更新
-    new Swiper(this.$refs.floor1Swiper, {
-      speed: 2000, //到下一张所花费的时间
-      loop: true, //无缝轮播
-      spaceBetween: 30,
-      autoplay: {
-        delay: 2000,
-        disableOnInteraction: false,
-      },
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-    })
-  },
 }
 </script>
 

@@ -5,9 +5,6 @@
     <Recommend></Recommend>
     <Rank></Rank>
     <Like></Like>
-    <!-- floorList确实也是发送请求获取到数据的 -->
-    <!-- 刚开始空数组时没有生成floor 数据请求回来后才有了floor组件 -->
-    <!-- floor想要有 他的数据一定请求回来了 -->
     <Floor v-for="floor in floorList" :key="floor.id" :floor="floor"></Floor>
     <Brand></Brand>
   </div>
