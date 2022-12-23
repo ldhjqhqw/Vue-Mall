@@ -131,9 +131,9 @@ export default {
         categoryName: '', //分类名字
         keyword: '', //关键字
         props: [], //属性
-        trademark: '', //品牌
-        // 下面这三个是默认参数
-        order: '1:desc', //排序规则 综合降序
+        trademark: '',//品牌
+				// 下面这三个是默认参数
+				order: '1:desc', //排序规则 综合降序
         pageNo: 1, //获取分页当中的第几页
         pageSize: 5, //页大小 一页获取几个数据
       },
@@ -142,28 +142,27 @@ export default {
   components: {
     SearchSelector,
   },
-  beforeMount() {
-    // 发送请求之前应该把用户点击或者输入的关键字或者分类信息 修改掉搜索条件对象里面的某些属性 从而去发送请求
+	beforeMount(){
+		// 发送请求之前应该把用户点击或者输入的关键字或者分类信息 修改掉搜索条件对象里面的某些属性 从而去发送请求
 
-    // 获取用户输入的关键字及点击的分类信息
-    let { category1Id, category2Id, category3Id, categoryName } =
-      this.$route.query
-    let { keyword } = this.$route.params
+		// 获取用户输入的关键字及点击的分类信息
+		let {category1Id,category2Id,category3Id,categoryName} = this.$route.query
+		let {keyword} = this.$route.params
 
-    // 根据路由当中的参数 修改搜索条件里面的对应属性
-    let searchParams = {
-      // 展开this.searchParams里面所有的属性
-      ...this.searchParams,
-      category1Id,
-      category2Id,
-      category3Id,
-      categoryName,
-      keyword,
-    }
-    this.searchParams = searchParams
-  },
+		// 根据路由当中的参数 修改搜索条件里面的对应属性
+		let searchParams = {
+			// 展开this.searchParams里面所有的属性
+			...this.searchParams,
+			category1Id,
+			category2Id,
+			category3Id,
+			categoryName,
+			keyword
+		}
+		this.searchParams = searchParams
+	},
   mounted() {
-    // 页面一挂载就直接发送了请求
+		// 页面一挂载就直接发送了请求 
     this.getGoodsInfo()
   },
   methods: {
@@ -175,26 +174,6 @@ export default {
   },
   computed: {
     ...mapGetters(['goodsList']),
-  },
-  watch: {
-    // 只要路径信息有变化就可以监听到
-    $route() {
-      // 获取最新的params参数和query参数 修改搜索条件对象里面的属性
-      let { category1Id, category2Id, category3Id, categoryName } =
-        this.$route.query
-      let { keyword } = this.$route.params
-      let searchParams = {
-        ...this.searchParams,
-        category1Id,
-        category2Id,
-        category3Id,
-        categoryName,
-        keyword,
-      }
-      this.searchParams = searchParams
-      // 重新用最新的搜索条件对象发送请求
-      this.getGoodsInfo()
-    },
   },
 }
 </script>
