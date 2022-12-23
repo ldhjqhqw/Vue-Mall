@@ -52,24 +52,23 @@
 					<!-- 商品列表 -->
 					<div class="goods-list">
 						<ul class="yui3-g">
-							<li class="yui3-u-1-5" v-for="goods in goodsList" :key="goods.id">
+							<li class="yui3-u-1-5">
 								<div class="list-wrap">
 									<div class="p-img">
-										<a href="item.html" target="_blank">
-											<img :src="goods.defaultImg" />
-										</a>
+										<a href="item.html" target="_blank"><img src="./images/mobile01.png" /></a>
 									</div>
 									<div class="price">
 										<strong>
 											<em>¥</em>
-											<i>{{goods.price}}</i>
+											<i>6088.00</i>
 										</strong>
 									</div>
 									<div class="attr">
-										<a target="_blank" href="item.html" :title="goods.title">{{ goods.title }}</a>
+										<a target="_blank" href="item.html" title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】">Apple苹果iPhone
+											6s (A1699)Apple苹果iPhone 6s (A1699)Apple苹果iPhone 6s (A1699)Apple苹果iPhone 6s (A1699)</a>
 									</div>
 									<div class="commit">
-										<i class="command">已有<span>{{goods.hotScore}}</span>人评价</i>
+										<i class="command">已有<span>2000</span>人评价</i>
 									</div>
 								</div>
 							</li>
@@ -113,7 +112,6 @@
 
 <script>
 	import SearchSelector from './SearchSelector'
-	import {mapGetters} from 'vuex'
 	export default {
 		name: 'Search',
 		components: {
@@ -127,9 +125,6 @@
 				// 现在暂时不和用户的操作挂上联系 暂时传递一个空对象做为请求参数 只是为了获取数据展示数据
 				this.$store.dispatch('getGoodsInfo',{})
 			}
-		},
-		computed:{
-			...mapGetters(['goodsList'])
 		}
 	}
 </script>
