@@ -13,34 +13,16 @@
           </ul>
           <ul class="fl sui-tag">
             <!-- 分类面包屑 -->
-            <li class="with-x" v-if="searchParams.categoryName">
-              {{ searchParams.categoryName }}<i @click="removeCategory">×</i>
-            </li>
+            <li class="with-x" v-if="searchParams.categoryName">{{searchParams.categoryName}}<i @click="removeCategory">×</i></li>
             <!-- 关键字面包屑 -->
-            <li class="with-x" v-if="searchParams.keyword">
-              {{ searchParams.keyword }}<i @click="removeKeyword">×</i>
-            </li>
+            <li class="with-x" v-if="searchParams.keyword">{{searchParams.keyword}}<i @click="removeKeyword">×</i></li>
             <!-- 品牌的面包屑 -->
-            <li class="with-x" v-if="searchParams.trademark">
-              {{ searchParams.trademark.split(':')[1]
-              }}<i @click="removeTrademark">×</i>
-            </li>
-            <!-- 属性的面包屑 -->
-            <li
-              class="with-x"
-              v-for="(prop, index) in searchParams.props"
-              :key="prop"
-            >
-              {{ prop.split(':')[1] }}<i @click="removeProp(index)">×</i>
-            </li>
+            <li class="with-x" v-if="searchParams.trademark">{{searchParams.trademark.split(':')[1]}}<i @click="removeTrademark">×</i></li>
           </ul>
         </div>
 
         <!-- 搜索器 -->
-        <SearchSelector
-          @searchOfTrademark="searchOfTrademark"
-          @searchOfProp="searchOfProp"
-        />
+        <SearchSelector @searchOfTrademark="searchOfTrademark" @searchOfProp="searchOfProp"/>
 
         <!--商品展示区-->
         <div class="details clearfix">
@@ -197,58 +179,51 @@ export default {
       this.searchParams = searchParams
     },
     // 删除分类的面包屑
-    removeCategory() {
+    removeCategory(){
       // 分类的面包屑不应该显示了
       this.searchParams.categoryName = ''
       // 拿最新的搜索条件对象发送请求(利用监视来去发送请求)
-      this.$router.push({ name: 'search', params: this.$route.params })
+      this.$router.push({name:'search',params:this.$route.params})
     },
     // 删除关键字的面包屑
-    removeKeyword() {
+    removeKeyword(){
       // 关键字面包屑不能展示
       this.searchParams.keyword = ''
       // 应该携带这query参数重新发送请求
-      this.$router.push({ name: 'search', query: this.$route.query })
+      this.$router.push({name:'search',query:this.$route.query})
       // 还需要把Header组件当中的数据清空
       this.$bus.$emit('removeKeyword')
     },
     // 根据品牌进行搜索
-    searchOfTrademark(tm) {
+    searchOfTrademark(tm){
       // 应该把点击的这个品牌来去修改搜索条件对象里面的trademark属性
       this.searchParams.trademark = `${tm.tmId}:${tm.tmName}`
-      // 拿着最新的搜索条件对象发送请求
+			// 拿着最新的搜索条件对象发送请求
       this.getGoodsInfo()
     },
     // 删除品牌的面包屑
-    removeTrademark() {
+    removeTrademark(){
       // 品牌面包屑不显示
       this.searchParams.trademark = ''
       // 重新发送请求
       this.getGoodsInfo()
     },
     // 根据属性进行搜索
-    searchOfProp(attr, attrValue) {
-      // 拿到属性和属性值拼装成对应的是格式("属性ID:属性值:属性名") 放入searchparams中props里
+    searchOfProp(attr,attrValue){
+      // 拿到属性和属性值拼装成对应的是格式("属性ID:属性值:属性名") 放入searchparams中props里 
       let str = `${attr.attrId}:${attrValue}:${attr.attrName}`
       // 判断新增的str之前有没有出现在数组中
-      let flag = this.searchParams.props.some((item) => {
+      let flag =  this.searchParams.props.some(item=>{
         return item === str
       })
-      if (flag) {
-        //代表这一项重复了
+      if(flag){ //代表这一项重复了
         alert('请不要重复添加此属性')
         return
       }
       this.searchParams.props.push(str)
       // 重新发送请求
       this.getGoodsInfo()
-    },
-    // 删除属性的面包屑
-    removeProp(index){
-      // 应该把searchParams中的props符合这个下标的那一项删除掉
-      this.searchParams.props.splice(index,1)
-      // 重新发送请求
-      this.getGoodsInfo()
+
     }
   },
   computed: {
