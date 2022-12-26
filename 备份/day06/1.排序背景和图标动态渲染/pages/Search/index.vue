@@ -54,39 +54,11 @@
                       2.2 谁出现图标 看排序类型(谁背景高亮谁就出现图标) 
                       2.3 图标使用向上的还是向下的 取决于排序标识 desc降序用向下的 asc升序用向上的
                 -->
-                <li
-                  :class="{ active: orderType === '1' }"
-                  @click="searchOfOrder('1')"
-                >
-                  <a
-                    >综合
-                    <i
-                      v-if="orderType === '1'"
-                      class="iconfont"
-                      :class="{
-                        'icon-up': orderFlag === 'asc',
-                        'icon-down':
-                        orderFlag === 'desc',
-                      }"
-                    ></i>
-                  </a>
+                <li :class="{active:searchParams.order.split(':')[0] === '1'}">
+                  <a href="#">综合 <i v-if="searchParams.order.split(':')[0] === '1'" class="iconfont" :class="{'icon-up':searchParams.order.split(':')[1]==='asc','icon-down':searchParams.order.split(':')[1]==='desc'}"></i> </a>
                 </li>
-                <li
-                  :class="{ active: orderType === '2' }"
-                  @click="searchOfOrder('2')"
-                >
-                  <a
-                    >价格
-                    <i
-                      v-if="orderType === '2'"
-                      class="iconfont"
-                      :class="{
-                        'icon-up': orderFlag === 'asc',
-                        'icon-down':
-                        orderFlag === 'desc',
-                      }"
-                    ></i>
-                  </a>
+                <li :class="{active:searchParams.order.split(':')[0] === '2'}">
+                  <a href="#">价格 <i v-if="searchParams.order.split(':')[0] === '2'" class="iconfont" :class="{'icon-up':searchParams.order.split(':')[1]==='asc','icon-down':searchParams.order.split(':')[1]==='desc'}"></i>  </a>
                 </li>
               </ul>
             </div>
@@ -270,39 +242,15 @@ export default {
       this.getGoodsInfo()
     },
     // 删除属性的面包屑
-    removeProp(index) {
+    removeProp(index){
       // 应该把searchParams中的props符合这个下标的那一项删除掉
-      this.searchParams.props.splice(index, 1)
-      // 重新发送请求
-      this.getGoodsInfo()
-    },
-    // 根据排序方式进行搜索
-    searchOfOrder(type){
-      // 获取之前的排序类型以及排序的标识
-      let originType = this.orderType
-      let originFlag = this.orderFlag
-      // 准备一个回头要完成的order
-      let finishiOrder
-      // 判断点击的是不是同一个类型
-      if(originType === type){  //点的同一个 修改排序的标识
-        finishiOrder = `${type}:${originFlag==='asc'?'desc':'asc'}`
-      }else{ //点的不是同一个 排序类型要变 排序标识默认是升序或者降序 (降序)
-        finishiOrder = `${type}:desc`
-      }
-      // 要去修改搜索条件对象当中的order
-      this.searchParams.order = finishiOrder
+      this.searchParams.props.splice(index,1)
       // 重新发送请求
       this.getGoodsInfo()
     }
   },
   computed: {
     ...mapGetters(['goodsList']),
-    orderType(){
-      return this.searchParams.order.split(':')[0]
-    },
-    orderFlag(){
-      return this.searchParams.order.split(':')[1]
-    }
   },
   watch: {
     // 只要路径信息有变化就可以监听到

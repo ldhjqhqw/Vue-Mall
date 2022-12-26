@@ -56,9 +56,8 @@
                 -->
                 <li
                   :class="{ active: orderType === '1' }"
-                  @click="searchOfOrder('1')"
                 >
-                  <a
+                  <a href="#"
                     >综合
                     <i
                       v-if="orderType === '1'"
@@ -73,9 +72,8 @@
                 </li>
                 <li
                   :class="{ active: orderType === '2' }"
-                  @click="searchOfOrder('2')"
                 >
-                  <a
+                  <a href="#"
                     >价格
                     <i
                       v-if="orderType === '2'"
@@ -276,24 +274,6 @@ export default {
       // 重新发送请求
       this.getGoodsInfo()
     },
-    // 根据排序方式进行搜索
-    searchOfOrder(type){
-      // 获取之前的排序类型以及排序的标识
-      let originType = this.orderType
-      let originFlag = this.orderFlag
-      // 准备一个回头要完成的order
-      let finishiOrder
-      // 判断点击的是不是同一个类型
-      if(originType === type){  //点的同一个 修改排序的标识
-        finishiOrder = `${type}:${originFlag==='asc'?'desc':'asc'}`
-      }else{ //点的不是同一个 排序类型要变 排序标识默认是升序或者降序 (降序)
-        finishiOrder = `${type}:desc`
-      }
-      // 要去修改搜索条件对象当中的order
-      this.searchParams.order = finishiOrder
-      // 重新发送请求
-      this.getGoodsInfo()
-    }
   },
   computed: {
     ...mapGetters(['goodsList']),
