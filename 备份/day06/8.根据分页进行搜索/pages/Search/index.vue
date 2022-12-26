@@ -193,11 +193,7 @@ export default {
   },
   methods: {
     // 发送请求
-    getGoodsInfo(flag) {
-      // 因为只给分页调用这个函数传了true  别的搜索条件发送请求没传 undefined
-      if(!flag){ //说明是其他搜索条件变化
-        this.searchParams.pageNo = 1
-      }
+    getGoodsInfo() {
       // 现在暂时不和用户的操作挂上联系 暂时传递一个空对象做为请求参数 只是为了获取数据展示数据
       // this.$store.dispatch('getGoodsInfo', {})
       this.$store.dispatch('getGoodsInfo', this.searchParams)
@@ -298,7 +294,7 @@ export default {
       // 拿到子组件传递的最新页码 去修改搜索对象中的pageNo
       this.searchParams.pageNo = pageNo
       // 发送请求
-      this.getGoodsInfo(true)
+      this.getGoodsInfo()
     }
   },
   computed: {
