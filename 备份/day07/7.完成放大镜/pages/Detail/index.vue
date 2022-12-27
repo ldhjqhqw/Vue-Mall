@@ -87,12 +87,12 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" v-model.number="skuNum" @change="skuNum<1?skuNum=1:''"/>
-                <a class="plus" @click="skuNum++">+</a>
-                <a  class="mins" @click="skuNum === 1?skuNum=1: skuNum--">-</a>
+                <input autocomplete="off" class="itxt" />
+                <a href="javascript:" class="plus">+</a>
+                <a href="javascript:" class="mins">-</a>
               </div>
               <div class="add">
-                <a >加入购物车</a>
+                <a href="javascript:">加入购物车</a>
               </div>
             </div>
           </div>
@@ -339,7 +339,6 @@ export default {
   data() {
     return {
       skuId: this.$route.params.skuId, // 商品的Id
-      skuNum:1
     }
   },
   components: {
@@ -361,7 +360,7 @@ export default {
       })
       // 当前点击的这一个属性值的isChecked为1
       attrValue.isChecked = '1'
-    },
+    }
   },
   computed: {
     ...mapGetters(['categoryView', 'skuInfo', 'spuSaleAttrList']),
