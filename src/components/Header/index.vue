@@ -9,6 +9,7 @@
             <span>请</span>
             <router-link to="/login">登录</router-link>
             <router-link to="/register" class="register">免费注册</router-link>
+            <router-link to="/communication" class="register">组件通信</router-link>
           </p>
         </div>
         <div class="loginList" v-else>

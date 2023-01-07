@@ -6,7 +6,7 @@
   底部 路由meta元数据
 搜索
   定义咱们的搜索条件对象 用户一旦操作 修改搜索条件对象当中的某些属性 利用它重新发送请求 获取最新数据
-  分页器 (total pageNo continues pageSize total)  计算连续页的开始和结束(4种情况) 动态渲染分页器 根据分页器进行搜索
+  分页器 (total pageNo continues pageSize totalPage)  计算连续页的开始和结束(4种情况) 动态渲染分页器 根据分页器进行搜索
 详情
   放大镜 轮播图(多张) 加入购物车(组件当中获取actions函数的结果 dispatch的返回值就是actions函数的返回值) 传递数据保存在了sessionStorage中
 添加购物车成功页面 

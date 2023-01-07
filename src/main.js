@@ -20,8 +20,9 @@ Vue.use(VueLazyLoad,{
 })
 
 // 对于咱们elementui当中的组件 使用方式3种  Vue.component Vue.use 增加到Vue原型当中
-import { Button,MessageBox,Message } from 'element-ui';
+import { Button,MessageBox,Message,Input } from 'element-ui';
 Vue.component(Button.name, Button);
+Vue.component(Input.name, Input);
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
 Vue.prototype.$message = Message;
