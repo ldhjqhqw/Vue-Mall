@@ -1,7 +1,8 @@
 <template>
   <ul>
     <li v-for="(todo, index) in todos" :key="todo.id">
-      {{todo.text}}
+      <!-- 子组件传递todo数据给到父组件了 -->
+      <slot :todo="todo" :index="index"></slot>
     </li>
   </ul>
 </template>
